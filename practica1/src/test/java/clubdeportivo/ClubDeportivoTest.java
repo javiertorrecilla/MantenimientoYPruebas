@@ -33,6 +33,25 @@ public class ClubDeportivoTest {
         assertNotEquals(expectedValue, returnValue);
     }
 
+    @Test
+    @DisplayName("Comprueba que dos clubes deportivos son iguales si su nombre es el mismo y el numero de grupos tambien lo es")
+    public void ClubDeportivo_CompareName_CheckEquals() throws ClubException{
+        String nombre = "ClubDeportivo";
+        ClubDeportivo cd1 = new ClubDeportivo(nombre);
+        ClubDeportivo cd2 = new ClubDeportivo(nombre);
+        String expectedValue = cd1.toString();
+        String returnValue = cd2.toString();
+        assertEquals(expectedValue, returnValue);
+    }
+
+    @Test
+    @DisplayName("Comprueba que se lanza un error si se crea un club con 0 o menos grupos")
+    public void ClubDeportivo_NoGroups_ThrowsError() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int tam = 0;
+        assertThrows(ClubException.class, () -> ClubDeportivo cd = new ClubDeportivo(nombre, tam));
+    }
+
     /*@Test
     @DisplayName("Comprueba que se añade una actividad dado un string valido")
     public void anyadirActividad_StringDatos_Check() throws ClubException{
@@ -178,15 +197,26 @@ public class ClubDeportivoTest {
         assertEquals(expectedValue, returnValue);
     }
 
+    @Test
+    @DisplayName("Comprueba que las plazas libres de una actividad cuando solo hay un grupo de dicha actividad")
+    public void plazasLibres_NoGroup_Check() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int tam1 = 3;
+        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        
+        String codigo = "GrupoUno";
+        String actividad = "Yoga";
+        int nplazas = 10;
+        int matriculados =  5;
+        double tarifa =  10;
+        Grupo grupo1 = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
 
+        club.anyadirActividad(grupo1);
 
+        int expectedValue = 0;
+        int returnValue = club.plazasLibres("Pilates");
 
-
-
-
-
-
-
-
+        assertEquals(expectedValue, returnValue);
+    }
 }
 
