@@ -1,22 +1,20 @@
 package clubdeportivo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ClubDeportivoTest {
+
+    ClubDeportivo club;
     
     @Test
     @DisplayName("Comprueba que se crea el constructor de la manera correcta")
     public void ClubDeportivo_WithTam_CheckCreation() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam = 3;
-        ClubDeportivo cd1 = new ClubDeportivo(nombre, tam);
+        club = new ClubDeportivo(nombre, tam);
         String expectedValue = "ClubDeportivo --> [  ]";
-        String returnValue = cd1.toString();
+        String returnValue = club.toString();
         assertEquals(expectedValue, returnValue);
     }
 
@@ -39,7 +37,7 @@ public class ClubDeportivoTest {
     public void ClubDeportivo_NoGroups_ThrowsError() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam = 0;
-        assertThrows(ClubException.class, () -> ClubDeportivo cd = new ClubDeportivo(nombre, tam));
+        assertThrows(ClubException.class, () -> club = new ClubDeportivo(nombre, tam));
     }
 
     @Test
@@ -47,7 +45,7 @@ public class ClubDeportivoTest {
     public void anyadirActividad_StringDatos_Check() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String[] datos = {"GrupoUno", "Yoga", "20", "15", "10"}; 
 
@@ -63,11 +61,11 @@ public class ClubDeportivoTest {
     public void anyadirActividad_StringDatos_ThrowsError() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String[] datos = {"GrupoUno", "Yoga", "Veinte", "15", "10.50"}; 
 
-        assertThrows(NumberFormatException.class,() -> club.anyadirActividad(datos));
+        assertThrows(ClubException.class,() -> club.anyadirActividad(datos));
     }
 
     @Test
@@ -75,16 +73,10 @@ public class ClubDeportivoTest {
     public void anyadirActividad_NullGroup_ThrowsError() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
-        
-        String codigo = "GrupoUno";
-        String actividad = "Yoga";
-        int nplazas = 10;
-        int matriculados =  5;
-        double tarifa =  10;
-        Grupo grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
+         club = new ClubDeportivo(nombre, tam1);
+        Grupo grupo = null;
 
-        assertThrows(ClubException.class,() -> club.anyadirActividad(null));
+        assertThrows(ClubException.class,() -> club.anyadirActividad(grupo));
     }
 
     @Test
@@ -92,7 +84,7 @@ public class ClubDeportivoTest {
     public void anyadirActividad_ExistingGroup_UpdatePlazas() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String codigo = "GrupoUno";
         String actividad = "Yoga";
@@ -123,7 +115,7 @@ public class ClubDeportivoTest {
     public void anyadirActividad_Check() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam = 3;
-        ClubDeportivo cd1 = new ClubDeportivo(nombre, tam);
+        club = new ClubDeportivo(nombre, tam);
 
         String codigo = "GrupoUno";
         String actividad = "Yoga";
@@ -132,10 +124,10 @@ public class ClubDeportivoTest {
         double tarifa =  10;
         Grupo grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
 
-        cd1.anyadirActividad(grupo);
+        club.anyadirActividad(grupo);
 
         String expectedValue = "ClubDeportivo --> [ (GrupoUno - Yoga - 10.0 euros - P:10 - M:5) ]";
-        String returnValue = cd1.toString();
+        String returnValue = club.toString();
         assertEquals(expectedValue, returnValue);
     }
 
@@ -144,7 +136,7 @@ public class ClubDeportivoTest {
     public void plazasLibres_MoreThanOneGroup_Check() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String codigo = "GrupoUno";
         String actividad = "Yoga";
@@ -174,7 +166,7 @@ public class ClubDeportivoTest {
     public void plazasLibres_OnlyOneGroup_Check() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String codigo = "GrupoUno";
         String actividad = "Yoga";
@@ -196,7 +188,7 @@ public class ClubDeportivoTest {
     public void plazasLibres_NoGroup_Check() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String codigo = "GrupoUno";
         String actividad = "Yoga";
@@ -218,7 +210,7 @@ public class ClubDeportivoTest {
     public void matricular_LessPlazas_ThrowsError() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String codigo = "GrupoUno";
         String actividad = "Yoga";
@@ -237,7 +229,7 @@ public class ClubDeportivoTest {
     public void matricular__Check() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String codigo = "GrupoUno";
         String actividad = "Yoga";
@@ -261,7 +253,7 @@ public class ClubDeportivoTest {
     public void ingresos_Check() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
-        ClubDeportivo club = new ClubDeportivo(nombre, tam1);
+        club = new ClubDeportivo(nombre, tam1);
         
         String codigo = "GrupoUno";
         String actividad = "Yoga";
