@@ -10,13 +10,33 @@ public class ClubDeportivoTest {
     
     @Test
     @DisplayName("Comprueba que dos clubes deportivos son iguales si su nombre es el mismo y el numero de grupos tambien lo es")
-    public void ClubDeportivo_Compare_CheckEquals() throws ClubException{
+    public void ClubDeportivo_CompareNoGroups_CheckEquals() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam = 3;
         ClubDeportivo cd1 = new ClubDeportivo(nombre, tam);
-        ClubDeportivo cd2 = new ClubDeportivo(nombre, tam);
-        String expectedValue = cd1.toString();
-        String returnValue = cd2.toString();
+        String expectedValue = "ClubDeportivo --> [  ]";
+        String returnValue = cd1.toString();
+        assertEquals(expectedValue, returnValue);
+    }
+
+    @Test
+    @DisplayName("Comprueba que dos clubes deportivos son iguales si su nombre es el mismo y el numero de grupos tambien lo es")
+    public void ClubDeportivo_CompareWithGroups_CheckEquals() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int tam = 3;
+        ClubDeportivo cd1 = new ClubDeportivo(nombre, tam);
+
+        String codigo = "GrupoUno";
+        String actividad = "Yoga";
+        int nplazas = 10;
+        int matriculados =  5;
+        double tarifa =  10;
+        Grupo grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
+
+        cd1.anyadirActividad(grupo);
+
+        String expectedValue = "ClubDeportivo --> [ (GrupoUno - Yoga - 10.0 euros - P:10 - M:5) ]";
+        String returnValue = cd1.toString();
         assertEquals(expectedValue, returnValue);
     }
 
@@ -218,5 +238,5 @@ public class ClubDeportivoTest {
 
         assertEquals(expectedValue, returnValue);
     }
-}
 
+}
