@@ -17,7 +17,6 @@ public class ClubDeportivoTest {
         assertEquals(expectedValue, returnValue);
     }
     
-    //aqui estas creando un club deportivo pero con tam grupos, no el primer Constructor
     @Test
     @DisplayName("Comprueba que se crea un Club Deportivo con un numero n de grupos correctamente")
     public void ClubDeportivo_WithNGroups_CheckCreation() throws ClubException{
@@ -29,7 +28,6 @@ public class ClubDeportivoTest {
         assertEquals(expectedValue, returnValue);
     }
 
-    //¿donde esta el equals definido?
     @Test
     @DisplayName("Comprueba que dos clubes deportivos no son iguales porque no tienen el mismo nombre")
     public void ClubDeportivo_Compare_DifferentNames() throws ClubException{
@@ -51,6 +49,27 @@ public class ClubDeportivoTest {
         int n = 0;
         assertThrows(ClubException.class, () -> club = new ClubDeportivo(nombre, n));
     }
+
+    @Test
+    @DisplayName("Comprueba que se lanza un error si se crea un club con 0 o menos grupos")
+    public void ClubDeportivo_NoName_ThrowsError() throws ClubException{
+        String nombre = null;
+        int n = 3;
+        assertThrows(ClubException.class, () -> club = new ClubDeportivo(nombre, n));
+    }
+
+    @Test
+    @DisplayName("Comprueba lanza un error cuando no hay suficientes datos para crear un grupo")
+    public void anyadirActividad_MissingDatas_ThrowsError() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int n = 3;
+        club = new ClubDeportivo(nombre, n);
+
+        String[] datos = {"GrupoUno", "Yoga", "5", "3"}; 
+
+        assertThrows(ClubException.class, () -> club.anyadirActividad(datos));
+    }
+
 
     @Test
     @DisplayName("Comprueba que se añade una actividad en un grupo nuevo dado un string valido")
@@ -198,6 +217,17 @@ public class ClubDeportivoTest {
     }
 
     @Test
+    @DisplayName("Comprueba que se lanza un error debido a que se inserta una actividad nula")
+    public void plazasLibres_NullActivity_ThrowsError() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int tam1 = 3;
+         club = new ClubDeportivo(nombre, tam1);
+         String actividad = null;
+
+        assertThrows(ClubException.class,() -> club.plazasLibres(actividad));
+    }
+
+    @Test
     @DisplayName("Comprueba las plazas libres de una actividad cuando hay mas de un grupo de dicha actividad")
     public void plazasLibres_MoreThanOneGroup_Check() throws ClubException{
         String nombre = "ClubDeportivo";
@@ -269,6 +299,30 @@ public class ClubDeportivoTest {
         int returnValue = club.plazasLibres("Pilates");
 
         assertEquals(expectedValue, returnValue);
+    }
+
+    @Test
+    @DisplayName("Comprueba que se lanza un error debido a que se inserta una actividad nula")
+    public void matricular_NullActivity_ThrowsError() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int tam1 = 3;
+         club = new ClubDeportivo(nombre, tam1);
+         String actividad = null;
+         int npersonas = 5;
+
+        assertThrows(ClubException.class,() -> club.matricular(actividad, npersonas));
+    }
+
+    @Test
+    @DisplayName("Comprueba que se lanza un error debido a que se intenta matriculas cero o menos personas")
+    public void matricular_IncorrectPeople_ThrowsError() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int tam1 = 3;
+         club = new ClubDeportivo(nombre, tam1);
+         String actividad = "Yoga";
+         int npersonas = 0;
+
+        assertThrows(ClubException.class,() -> club.matricular(actividad, npersonas));
     }
 
     @Test
