@@ -10,6 +10,30 @@ public class GrupoTest {
     //los test de los getters se encuentran en GrupoTest.java para un mayor orden en el codigo
 
     @Test
+    @DisplayName("Comoprueba que el nombre del grupo no puede ser nulo")
+    public void grupo_NombreNulo_ThrowsError() throws ClubException{
+        String codigo = null;
+        String actividad = "Pilates";
+        int nplazas = 0;
+        int matriculados = 0;
+        double tarifa = 15;
+
+        assertThrows(ClubException.class,()-> grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa));
+    }
+
+    @Test
+    @DisplayName("Comoprueba que la actividad del grupo no puede ser nula")
+    public void grupo_ActividadNula_ThrowsError() throws ClubException{
+        String codigo = "GrupoUno";
+        String actividad = null;
+        int nplazas = 0;
+        int matriculados = 0;
+        double tarifa = 15;
+
+        assertThrows(ClubException.class,()-> grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa));
+    }
+
+    @Test
     @DisplayName("Comprueba que el numero de plazas de un grupo no puede ser menor a 1")
     public void grupo_NumeroPlazasMenorAUno_ThrowsError() throws ClubException{
         String codigo = "GrupoUno";
