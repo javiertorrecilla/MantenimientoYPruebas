@@ -49,6 +49,11 @@ public class ClubDeportivo {
 		}
 		int pos = buscar(g);
 		if (pos == -1) { // El grupo es nuevo
+			//modificacion para que si intentamos añadir mas grupos de los 
+			//permitidos en un club salte una excepcion
+			if(ngrupos>=grupos.length){
+				throw new ClubException("No se pueden añadir mas grupos al club");
+			}
 			grupos[ngrupos] = g;
 			ngrupos++;
 		} else { // El grupo ya existe --> modificamos las plazas
@@ -82,6 +87,9 @@ public class ClubDeportivo {
 					npersonas -= plazasGrupo;
 				} else {
 					grupos[i].matricular(npersonas);
+					//modificacion para que si en ese grupo caben todas las 
+					//personas, ya no quedan por matricular
+					npersonas = 0;
 				}
 			}
 			i++;
