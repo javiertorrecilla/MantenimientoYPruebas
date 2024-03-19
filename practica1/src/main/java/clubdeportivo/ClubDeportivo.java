@@ -51,7 +51,7 @@ public class ClubDeportivo {
 	}
 
 	public void anyadirActividad(Grupo g) throws ClubException {
-		if(ngrupos==grupos.length()){
+		if(ngrupos==grupos.length){
 			throw new ClubException("ERROR: no se puede añadir mas grupos porque el club esta completo");
 		}
 		if (g==null){ // ADDME: anaydido para comprobar los grupos nulos
@@ -59,11 +59,6 @@ public class ClubDeportivo {
 		}
 		int pos = buscar(g);
 		if (pos == -1) { // El grupo es nuevo
-			//modificacion para que si intentamos añadir mas grupos de los 
-			//permitidos en un club salte una excepcion
-			if(ngrupos>=grupos.length){
-				throw new ClubException("No se pueden añadir mas grupos al club");
-			}
 			grupos[ngrupos] = g;
 			ngrupos++;
 		} else { // El grupo ya existe --> modificamos las plazas
