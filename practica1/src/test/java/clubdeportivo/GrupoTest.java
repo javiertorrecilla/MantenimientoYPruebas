@@ -236,7 +236,7 @@ public class GrupoTest {
 
     @Test
     @DisplayName("Comprueba que dos grupos no son iguales ya que su codigo no es el mismo")
-    public void equals_TwoGroups_ReturnFalse() throws ClubException{
+    public void equals_TwoGroupsDifferentCode_ReturnFalse() throws ClubException{
         String codigo = "GrupoUno";
         String actividad = "Pilates";
         int nplazas = 30;
@@ -255,6 +255,45 @@ public class GrupoTest {
         
         assertFalse(grupo.equals(grupo2));
     }
+
+    @Test
+    @DisplayName("Comprueba que dos grupos no son iguales ya que su actividad no es la misma")
+    public void equals_TwoGroupsDifferentActivity_ReturnFalse() throws ClubException{
+        String codigo = "GrupoUno";
+        String actividad = "Pilates";
+        int nplazas = 30;
+        int matriculados = 20;
+        double tarifa = 15;
+
+        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
+        
+        String codigo2 = "grupouno";
+        String actividad2 = "yoga";
+        int nplazas2 = 10;
+        int matriculados2 = 5;
+        double tarifa2 = 3;
+
+        Grupo grupo2 = new Grupo(codigo2, actividad2, nplazas2, matriculados2, tarifa2);
+        
+        assertFalse(grupo.equals(grupo2));
+    }
+
+    @Test
+    @DisplayName("Comprueba que el método equals devuelve false cuando se compara un Grupo con un objeto que no es Grupo")
+    public void equals_CompareWithNonGroupObject_ReturnFalse() throws ClubException {
+        String codigo = "GrupoUno";
+        String actividad = "Pilates";
+        int nplazas = 30;
+        int matriculados = 20;
+        double tarifa = 15;
+            
+        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
+
+        Object otroObjeto = new Object(); // Crear un objeto que no sea Grupo
+
+        assertFalse(grupo.equals(otroObjeto));
+    }
+
 
     @Test 
     @DisplayName("Comprueba que dos grupos tienen el mismo hashCode por tener el mismo codigo y actividad, independientemente de mayusculas y minusculas")
