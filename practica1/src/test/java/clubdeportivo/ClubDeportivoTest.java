@@ -1,3 +1,4 @@
+
 package clubdeportivo;
 
 import org.junit.jupiter.api.*;
@@ -51,7 +52,7 @@ public class ClubDeportivoTest {
     }
 
     @Test
-    @DisplayName("Comprueba que se lanza un error si se crea un club con 0 o menos grupos")
+    @DisplayName("Comprueba que se lanza un error si se crea un club con nombre nulo")
     public void ClubDeportivo_NoName_ThrowsError() throws ClubException{
         String nombre = null;
         int n = 3;
@@ -217,7 +218,7 @@ public class ClubDeportivoTest {
     }
 
     @Test
-    @DisplayName("Comprueba que se añade una actividad a un club dado un grupo de la misma")
+    @DisplayName("Comprueba que se lanza un error si se intenta añadir una actividad en un grupo nuevo y el club no puede tener mas grupos")
     public void anyadirActividad_MasGruposQueTamClub_ThrowsError() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam = 1;
@@ -230,7 +231,7 @@ public class ClubDeportivoTest {
         int matriculados =  5;
         double tarifa =  10;
         Grupo grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        Grupo grupo2 = new Grupo(codigo2, actividad, nplazas, metriculados, tarifa)
+        Grupo grupo2 = new Grupo(codigo2, actividad, nplazas, matriculados, tarifa);
         
         club.anyadirActividad(grupo);
         assertThrows(ClubException.class, ()->club.anyadirActividad(grupo2));
@@ -388,6 +389,7 @@ public class ClubDeportivoTest {
         int returnValue = grupo1.getMatriculados();
         assertEquals(expectedValue, returnValue);
     }
+
 
     @Test
     @DisplayName("Comprueba que se actualizan las matriculaciones de un grupo correctamente cuando hay mas de un grupo en el club")
