@@ -417,10 +417,9 @@ public class ClubDeportivoTest {
         club.anyadirActividad(grupo2);
 
         int nuevos = 3;
-
         int expectedValue = matriculados+nuevos;
-        club.matricular(grupo1.getActividad(), nuevos);
-        int returnValue = grupo1.getMatriculados();
+        club.matricular(grupo2.getActividad(), nuevos);
+        int returnValue = grupo2.getMatriculados();
         assertEquals(expectedValue, returnValue);
     }
 
