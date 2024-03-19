@@ -1,115 +1,103 @@
-package queueTest;
+package queue;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedNodeTest {
 
-    LinkedNode<T> ln;
-    LinkedNode<T> pre;
-    LinkedNode<T> next;
-
-    @BeforeEach
-    @DisplayName("Se crea un linked node antes de cada test")
-    public void linkedNodeCreate(){
-        pre = new LinkedNode(8, null, ln);
-        next = new LinkedNode(12, ln, null);
-        ln = new LinkedNode(10, pre, next);
-    }
+    private Object item = new Object();
+    private LinkedNode<Object> node = new LinkedNode<>(item, null, null);
 
     @Test
-    @DisplayName("Se comprueba que el metodo getItem se hace correctamente")
+    @DisplayName("Se comprueba que el metodo getItem te devuelve el item correctamente")
     public void getItem_Check(){
-        T expectedValue = 10;
-        T returnValue = ln.getItem();
+        Object expectedValue = item;
+        Object returnValue = node.getItem();
         assertEquals(expectedValue, returnValue);
     }
 
     @Test
-    @DisplayName("Se comprueba que el metodo setItem se hace correctamente")
+    @DisplayName("Se comprueba que el metodo setItem modifica el Item correctamente")
     public void setItem_Check(){
-        T newItem = 15;
-        ln.setItem(newItem);
-        T expectedValue = newItem;
-        T returnValue = ln.getItem();
+        Object newItem = new Object();
+        node.setItem(newItem);
+        Object expectedValue = newItem;
+        Object returnValue = node.getItem();
         assertEquals(expectedValue, returnValue);
     }
 
     @Test
-    @DisplayName("Se comprueba que el metodo getPrevious se hace correctamente")
-    public void getPrevious_Check(){
-        LinkedNode<T> expectedValue = pre;
-        LinkedNode<T> returnValue = ln.getPrevious();
+    @DisplayName("Se comprueba que el metodo getPrevious devuelve null si hay un unico nodo")
+    public void getPrevious_UnUnicoNodo_CheckNull(){
+        //inicialmente solo hay un nodo, el anterior es nulo
+        Object expectedValue = null;
+        Object returnValue = node.getPrevious();
         assertEquals(expectedValue, returnValue);
     }
 
     @Test
-    @DisplayName("Se comprueba que el metodo setItem se hace correctamente")
+    @DisplayName("Se comprueba que el metodo setItem modifica el Item previo correctamente")
     public void setPrevious_Check(){
-        LinkedNode<T> newPrevious = new LinkedNode(9,null,null);
-        ln.setPrevious(newPrevious);
-        LinkedNode<T> expectedValue = newPrevious;
-        LinkedNode<T> returnValue = ln.getPrevious();
+        Object pre = new Object();
+        LinkedNode<Object> previo = new LinkedNode<>(pre, null, node);
+        node.setPrevious(previo);
+
+        Object expectedValue = pre;
+        Object returnValue = node.getPrevious().getItem(); //se compara con el objeto item
         assertEquals(expectedValue, returnValue);
     }
 
     @Test
-    @DisplayName("Se comprueba que el metodo getNext se hace correctamente")
-    public void getNext_Check(){
-        LinkedNode<T> expectedValue = next;
-        LinkedNode<T> returnValue = ln.getNext();
+    @DisplayName("Se comprueba que el metodo getNext como no tiene siguiente devovlera nulo")
+    public void getNext_NoHaySiguiente_CheckNull(){
+        Object expectedValue = null;
+        Object returnValue = node.getNext();
         assertEquals(expectedValue, returnValue);
     }
 
     @Test
-    @DisplayName("Se comprueba que el metodo setNext se hace correctamente")
+    @DisplayName("Se comprueba que el metodo setNext modifica correctamente el Nodo siguiente")
     public void setNext_Check(){
-        LinkedNode<T> newNext = new LinkedNode(11,null,null);
-        ln.setPrevious(newNext);
-        LinkedNode<T> expectedValue = newNext;
-        LinkedNode<T> returnValue = ln.getPrevious();
+        Object post = new Object();
+        LinkedNode<Object> next = new LinkedNode<Object>(post, node, null);
+
+        node.setNext(next);
+        
+        Object expectedValue = next;
+        Object returnValue = node.getNext();
         assertEquals(expectedValue, returnValue);
     }
 
     @Test
-    @DisplayName("Comprueba que para un nodo inicial, el metodo isFirstNode es verdadero")
-    public void isFirstNode_returnsTrue(){
-        boolean returnValue = pre.isFirstNode();
+    @DisplayName("Comprueba que como solo hay un nodo es el inicial")
+    public void isFirstNode_OneNode_returnsTrue(){
+        boolean returnValue = node.isFirstNode();
         assertTrue(returnValue);
     }
 
-    @Test
-    @DisplayName("Comprueba que para un nodo no inicial, el metodo isFirstNode es falso")
-    public void isFirstNode_returnsFalse(){
-        boolean returnValue = ln.isFirstNode();
-        assertFalse(returnValue);
-    }
 
     @Test
-    @DisplayName("Comprueba que para un nodo final, el metodo isLastNode es verdadero")
+    @DisplayName("Comprueba que como solo hay un nodo, es el final")
     public void isLastNode_returnsTrue(){
-        boolean returnValue = next.isLastNode();
+        boolean returnValue = node.isLastNode();
         assertTrue(returnValue);
     }
 
     @Test
-    @DisplayName("Comprueba que para un nodo no final, el metodo isLastNode es falso")
-    public void isLastNode_returnsFalse(){
-        boolean returnValue = ln.isLastNode();
+    @DisplayName("Comprueba que para un nodo terminal, el metodo iNotATerminalNode es falso")
+    public void isNotATerminalNode_returnsFalse(){
+        boolean returnValue = node.isNotATerminalNode();
         assertFalse(returnValue);
     }
 
     @Test
-    @DisplayName("Comprueba que para un nodo no terminal, el metodo iNotATerminalNode es verdadero")
-    public void isNotATerminalNode_returnsTrue(){
-        boolean returnValue = ln.isNotATerminalNode();
-        assertTrue(returnValue);
-    }
+    @DisplayName("Comprueba que para un nodo terminal que no es el primero, el metodo isNotATerminalNode es falso")
+    public void isNotATerminalNode_LastNode_returnsFalse(){
+        Object pre = new Object();
+        LinkedNode<Object> previo = new LinkedNode<>(pre, null, node);
+        node.setPrevious(previo);
 
-    @Test
-    @DisplayName("Comprueba que para un nodo terminal, el metodo isNotATerminalNode es falso")
-    public void isNotATerminalNode_returnsFalse(){
-        boolean returnValue = pre.isNotATerminalNode();
+        boolean returnValue = node.isNotATerminalNode();
         assertFalse(returnValue);
     }
 
