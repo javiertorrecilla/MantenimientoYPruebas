@@ -76,7 +76,7 @@ public class GrupoTest {
         String actividad = "Pilates";
         int nplazas = 20;
         int matriculados = 30;
-        double tarifa = 0;
+        double tarifa = 15;
 
         assertThrows(ClubException.class,()-> grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa));
     }
