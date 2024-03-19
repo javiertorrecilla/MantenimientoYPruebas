@@ -51,6 +51,9 @@ public class ClubDeportivo {
 	}
 
 	public void anyadirActividad(Grupo g) throws ClubException {
+		if(ngrupos==grupos.length()){
+			throw new ClubException("ERROR: no se puede añadir mas grupos porque el club esta completo");
+		}
 		if (g==null){ // ADDME: anaydido para comprobar los grupos nulos
 			throw new ClubException("ERROR: el grupo es nulo");
 		}
