@@ -347,7 +347,7 @@ public class ClubDeportivoTest {
 
     @Test
     @DisplayName("Comprueba que se actualizan las matriculaciones de un grupo correctamente")
-    public void matricular__CheckMatriculas() throws ClubException{
+    public void matricular_CheckMatriculas() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
         club = new ClubDeportivo(nombre, tam1);
@@ -370,8 +370,41 @@ public class ClubDeportivoTest {
     }
 
     @Test
+    @DisplayName("Comprueba que se actualizan las matriculaciones de un grupo correctamente cuando hay mas de un grupo en el club")
+    public void matricular_VariosGrupos_CheckMatriculas() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int tam1 = 3;
+        club = new ClubDeportivo(nombre, tam1);
+        
+        String codigo = "GrupoUno";
+        String actividad = "Yoga";
+        int nplazas = 10;
+        int matriculados =  5;
+        double tarifa =  10;
+        Grupo grupo1 = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
+
+        club.anyadirActividad(grupo1);
+
+        String codigo2 = "GrupoDos";
+        String actividad2 = "Pilates";
+        int nplazas2 = 10;
+        int matriculados2 =  5;
+        double tarifa2 =  10;
+        Grupo grupo2 = new Grupo(codigo2, actividad2, nplazas2, matriculados2, tarifa2);
+
+        club.anyadirActividad(grupo2);
+
+        int nuevos = 3;
+
+        int expectedValue = matriculados+nuevos;
+        club.matricular(grupo1.getActividad(), nuevos);
+        int returnValue = grupo1.getMatriculados();
+        assertEquals(expectedValue, returnValue);
+    }
+
+    @Test
     @DisplayName("Comprueba que en un club con 3 grupos de la misma actividad, se matricula correctamente en funcion de sus plazas libres en orden")
-    public void matricular_MoreThanOneGroup__CheckMatriculaciones() throws ClubException{
+    public void matricular_MoreThanOneGroup_CheckMatriculaciones() throws ClubException{
         String nombre = "ClubDeportivo";
         int tam1 = 3;
         club = new ClubDeportivo(nombre, tam1);
@@ -403,10 +436,10 @@ public class ClubDeportivoTest {
 
         club.anyadirActividad(grupo3);
 
-        int nuevos = 10;
-        int expectedValue = grupo3.getMatriculados();
+        int nuevos = 12;
+        int expectedValue = 5+5+5+12;
         club.matricular(grupo1.getActividad(), nuevos);
-        int returnValue = grupo3.getMatriculados();
+        int returnValue = grupo3.getMatriculados()+grupo2.getMatriculados()+grupo1.getMatriculados();
         assertEquals(expectedValue, returnValue);
     }
 
