@@ -82,7 +82,7 @@ public class ClubDeportivoAltoRendimientoTest {
 
     @Test
     @DisplayName("Comprueba que se añade correctamente un grupo a un club")
-    public void anyadirActividad_NewGroup_Check() throws ClubException{
+    public void anyadirActividad_NewGroup_CheckPlazasMasQueMaximo() throws ClubException{
         String nombre = "ClubDeAltoRendimiento";
         int tam = 5;
         int maximo = 5;
@@ -90,6 +90,25 @@ public class ClubDeportivoAltoRendimientoTest {
 
         club = new ClubDeportivoAltoRendimiento(nombre, tam, maximo, incremento);
         String[] datos = {"GrupoUno", "Yoga", "10", "3", "10"}; 
+
+        club.anyadirActividad(datos);
+
+        String expectedValue = nombre + " --> [ (GrupoUno - Yoga - 10.0 euros - P:5 - M:3) ]";
+        String returnValue = club.toString();
+        assertEquals(expectedValue, returnValue);
+        
+    }
+
+    @Test
+    @DisplayName("Comprueba que se añade correctamente un grupo a un club")
+    public void anyadirActividad_NewGroup_CheckPlazasMenosQueMaximo() throws ClubException{
+        String nombre = "ClubDeAltoRendimiento";
+        int tam = 5;
+        int maximo = 5;
+        int incremento = 5;
+
+        club = new ClubDeportivoAltoRendimiento(nombre, tam, maximo, incremento);
+        String[] datos = {"GrupoUno", "Yoga", "4", "3", "10"}; 
 
         club.anyadirActividad(datos);
 
