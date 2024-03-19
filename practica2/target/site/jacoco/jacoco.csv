@@ -1,0 +1,6 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+junit5-mps-uma,default,ClubDeportivoMain,67,0,0,0,11,0,2,0,2,0
+junit5-mps-uma,clubdeportivo,ClubDeportivoAltoRendimiento,0,110,1,11,0,26,1,9,0,4
+junit5-mps-uma,clubdeportivo,ClubException,3,4,0,0,2,2,1,1,1,1
+junit5-mps-uma,clubdeportivo,ClubDeportivo,0,312,1,41,0,75,1,29,0,9
+junit5-mps-uma,clubdeportivo,Grupo,0,182,2,24,0,34,2,23,0,12
