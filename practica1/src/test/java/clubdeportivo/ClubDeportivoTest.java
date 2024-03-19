@@ -217,6 +217,26 @@ public class ClubDeportivoTest {
     }
 
     @Test
+    @DisplayName("Comprueba que se añade una actividad a un club dado un grupo de la misma")
+    public void anyadirActividad_MasGruposQueTamClub_ThrowsError() throws ClubException{
+        String nombre = "ClubDeportivo";
+        int tam = 1;
+        club = new ClubDeportivo(nombre, tam);
+
+        String codigo = "GrupoUno";
+        String codigo2 = "GrupoDos";
+        String actividad = "Yoga";
+        int nplazas = 10;
+        int matriculados =  5;
+        double tarifa =  10;
+        Grupo grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
+        Grupo grupo2 = new Grupo(codigo2, actividad, nplazas, metriculados, tarifa)
+        
+        club.anyadirActividad(grupo);
+        assertThrows(ClubException.class, ()->club.anyadirActividad(grupo2));
+    }
+
+    @Test
     @DisplayName("Comprueba que se lanza un error debido a que se inserta una actividad nula")
     public void plazasLibres_NullActivity_ThrowsError() throws ClubException{
         String nombre = "ClubDeportivo";
