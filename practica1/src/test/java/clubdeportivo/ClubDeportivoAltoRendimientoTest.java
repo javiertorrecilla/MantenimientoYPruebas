@@ -33,11 +33,11 @@ public class ClubDeportivoAltoRendimientoTest {
         String nombre = "ClubDeAltoRendimiento";
         int maximo = 5;
         int incremento = 5;
-
         club = new ClubDeportivoAltoRendimiento(nombre, maximo, incremento);
         
         String expectedValue = nombre + " --> [  ]";
         String returnValue = club.toString();
+
         assertEquals(expectedValue, returnValue);
         
     }
@@ -71,11 +71,11 @@ public class ClubDeportivoAltoRendimientoTest {
         int tam = 5;
         int maximo = 5;
         int incremento = 5;
-
         club = new ClubDeportivoAltoRendimiento(nombre, tam, maximo, incremento);
         
         String expectedValue = nombre + " --> [  ]";
         String returnValue = club.toString();
+
         assertEquals(expectedValue, returnValue);
         
     }
@@ -87,14 +87,13 @@ public class ClubDeportivoAltoRendimientoTest {
         int tam = 5;
         int maximo = 5;
         int incremento = 5;
-
         club = new ClubDeportivoAltoRendimiento(nombre, tam, maximo, incremento);
         String[] datos = {"GrupoUno", "Yoga", "10", "3", "10"}; 
-
         club.anyadirActividad(datos);
 
         String expectedValue = nombre + " --> [ (GrupoUno - Yoga - 10.0 euros - P:5 - M:3) ]";
         String returnValue = club.toString();
+
         assertEquals(expectedValue, returnValue);
         
     }
@@ -106,14 +105,13 @@ public class ClubDeportivoAltoRendimientoTest {
         int tam = 5;
         int maximo = 5;
         int incremento = 5;
-
         club = new ClubDeportivoAltoRendimiento(nombre, tam, maximo, incremento);
         String[] datos = {"GrupoUno", "Yoga", "4", "3", "10"}; 
-
         club.anyadirActividad(datos);
 
         String expectedValue = nombre + " --> [ (GrupoUno - Yoga - 10.0 euros - P:4 - M:3) ]";
         String returnValue = club.toString();
+
         assertEquals(expectedValue, returnValue);
         
     }
@@ -125,7 +123,6 @@ public class ClubDeportivoAltoRendimientoTest {
         int tam = 5;
         int maximo = 5;
         int incremento = 5;
-
         club = new ClubDeportivoAltoRendimiento(nombre, tam, maximo, incremento);
         String[] datos = {"GrupoUno", "Yoga", "5", "3"}; 
 
@@ -139,7 +136,6 @@ public class ClubDeportivoAltoRendimientoTest {
         int tam = 5;
         int maximo = 5;
         int incremento = 5;
-
         club = new ClubDeportivoAltoRendimiento(nombre, tam, maximo, incremento);
         String[] datos = {"GrupoUno", "Yoga", "5", "3", "Diez"}; 
 
@@ -154,15 +150,12 @@ public class ClubDeportivoAltoRendimientoTest {
         int tam = 5;
         int maximo = 5;
         int incremento = 5;
-
         club = new ClubDeportivoAltoRendimiento(nombre, tam, maximo, incremento);
         String[] datos = {"GrupoUno", "Yoga", "10", "3", "10"}; 
-
         club.anyadirActividad(datos);
-
         double cantidad = Integer.parseInt(datos[3]) * Integer.parseInt(datos[4]);
-        double expectedValue = cantidad + cantidad * ((double) incremento/100);
 
+        double expectedValue = cantidad + cantidad * ((double) incremento/100);
         double returnValue = club.ingresos();
 
         assertEquals(expectedValue, returnValue);

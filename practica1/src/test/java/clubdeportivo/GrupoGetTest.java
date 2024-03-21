@@ -17,10 +17,10 @@ public class GrupoGetTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
         
         String returnValue = grupo.getCodigo();
+
         assertEquals(codigo, returnValue);
     }
 
@@ -32,10 +32,10 @@ public class GrupoGetTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
         
         String returnValue = grupo.getActividad();
+
         assertEquals(actividad, returnValue);
     }
 
@@ -47,10 +47,10 @@ public class GrupoGetTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
         
         int returnValue = grupo.getPlazas();
+
         assertEquals(nplazas, returnValue);
     }
 
@@ -62,10 +62,10 @@ public class GrupoGetTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
         
         int returnValue = grupo.getMatriculados();
+
         assertEquals(matriculados, returnValue);
     }
 
@@ -77,10 +77,10 @@ public class GrupoGetTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
         
         double returnValue = grupo.getTarifa();
+
         assertEquals(tarifa, returnValue);
     }
 }

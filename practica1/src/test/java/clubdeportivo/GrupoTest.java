@@ -89,7 +89,6 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
         
         int expectedValue = nplazas - matriculados;
@@ -106,12 +105,11 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
-        int expectedValue = 50;
         int n = 50;
         grupo.actualizarPlazas(n);
+        
+        int expectedValue = 50;
         int returnValue = grupo.getPlazas();
 
         assertEquals(expectedValue, returnValue);
@@ -125,10 +123,9 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
         int n=0;
+
         assertThrows(ClubException.class,()-> grupo.actualizarPlazas(n));
     }
 
@@ -140,10 +137,9 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
         int n=10;
+
         assertThrows(ClubException.class,()-> grupo.actualizarPlazas(n));
     }
 
@@ -155,13 +151,13 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
-        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
+        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa); 
         int n = 8;
-        int expectedValue = matriculados + n;
         grupo.matricular(n);
+
+        int expectedValue = matriculados + n;
         int returnValue = grupo.getMatriculados();
+        
         assertEquals(expectedValue, returnValue);
     }
 
@@ -173,10 +169,9 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
         int n = 12;
+
         assertThrows(ClubException.class, ()->grupo.matricular(n));
     }
 
@@ -188,10 +183,9 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
         int n = 0;
+
         assertThrows(ClubException.class, ()->grupo.matricular(n));
     }
 
@@ -203,7 +197,6 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
         
         String returnValue = grupo.toString();
@@ -220,15 +213,12 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
-        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
+        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);        
         String codigo2 = "grupouno";
         String actividad2 = "pilates";
         int nplazas2 = 10;
         int matriculados2 = 5;
         double tarifa2 = 3;
-
         Grupo grupo2 = new Grupo(codigo2, actividad2, nplazas2, matriculados2, tarifa2);
         
         assertTrue(grupo.equals(grupo2));
@@ -242,15 +232,12 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
-        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
+        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);       
         String codigo2 = "grupodos";
         String actividad2 = "pilates";
         int nplazas2 = 10;
         int matriculados2 = 5;
         double tarifa2 = 3;
-
         Grupo grupo2 = new Grupo(codigo2, actividad2, nplazas2, matriculados2, tarifa2);
         
         assertFalse(grupo.equals(grupo2));
@@ -264,15 +251,12 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
         String codigo2 = "grupouno";
         String actividad2 = "yoga";
         int nplazas2 = 10;
         int matriculados2 = 5;
         double tarifa2 = 3;
-
         Grupo grupo2 = new Grupo(codigo2, actividad2, nplazas2, matriculados2, tarifa2);
         
         assertFalse(grupo.equals(grupo2));
@@ -285,8 +269,7 @@ public class GrupoTest {
         String actividad = "Pilates";
         int nplazas = 30;
         int matriculados = 20;
-        double tarifa = 15;
-            
+        double tarifa = 15;            
         grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
 
         Object otroObjeto = new Object(); // Crear un objeto que no sea Grupo
@@ -303,16 +286,13 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
-        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
+        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);       
         String codigo2 = "grupouno";
         String actividad2 = "pilates";
         int nplazas2 = 10;
         int matriculados2 = 5;
         double tarifa2 = 3;
-
-        Grupo grupo2 = new Grupo(codigo2, actividad2, nplazas2, matriculados2, tarifa2);
+        Grupo grupo2 = new Grupo(codigo2, actividad2, nplazas2, matriculados2, tarifa2);       
         
         int value1 = grupo.hashCode();
         int value2 = grupo2.hashCode();
@@ -328,15 +308,12 @@ public class GrupoTest {
         int nplazas = 30;
         int matriculados = 20;
         double tarifa = 15;
-
-        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);
-        
+        grupo = new Grupo(codigo, actividad, nplazas, matriculados, tarifa);       
         String codigo2 = "grupodos";
         String actividad2 = "pilates";
         int nplazas2 = 10;
         int matriculados2 = 5;
         double tarifa2 = 3;
-
         Grupo grupo2 = new Grupo(codigo2, actividad2, nplazas2, matriculados2, tarifa2);
         
         int value1 = grupo.hashCode();
