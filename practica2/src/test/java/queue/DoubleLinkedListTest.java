@@ -157,7 +157,6 @@ public class DoubleLinkedListTest<T> {
             node.append(valor1);
             Object valor2 = new Object();
             node.append(valor2);
-
             node.deleteLast();
 
             Object returnedValue = node.first();
@@ -183,7 +182,6 @@ public class DoubleLinkedListTest<T> {
         public void first_TwoNodes_CheckFirst(){
             Object valor1 = new Object();
             Object valor2 = new Object();
-
             node.append(valor1);
             node.append(valor2);
 
@@ -209,7 +207,6 @@ public class DoubleLinkedListTest<T> {
         public void last_TwoNodes_CheckLast(){
             Object valor1 = new Object();
             Object valor2 = new Object();
-
             node.append(valor1);
             node.append(valor2);
 
