@@ -1,178 +1,249 @@
 package queue;
 
 import org.junit.jupiter.api.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DoubleLinkedListTest<T> {
 
-    private DoubleLinkedList<Object> node = new DoubleLinkedList<>();
+    private DoubleLinkedList<Object> node;
+
+    @Test 
+    @DisplayName("Es instanciado con una doble lista enlazada")
+    public void isInstantiatedWithNew(){
+        new DoubleLinkedListTest<>();
+    }
+
+    @BeforeEach
+    public void createNewList(){
+        node = new DoubleLinkedList<>();
+    }
+
+    @Nested 
+    @DisplayName("Test metodo prepend")
+    class prependTest{
+        @Test
+        @DisplayName("Comprueba que con la lista vacia, al añadir delante el primer nodo, el primero y el ultimo es el ultimo")
+        public void prepend_EmptyList_FirstEqualsLast(){
+            Object valor = new Object();
+            node.prepend(valor);
+            
+            Object expectedValue1 = node.first();
+            Object expectedValue2 = node.last();
+
+            assertEquals(valor, expectedValue1);
+            assertEquals(expectedValue1, expectedValue2);
+        }
+
+        @Test
+        @DisplayName("Comprueba que si añadimos por delante dos nodos, el ultimo añadido sera el primero y el primero sera el ultimo")
+        public void prepend_TwoNodes_LastIsFirst(){
+            Object valor1 = new Object();
+            node.prepend(valor1);
+            Object valor2 = new Object();
+            node.prepend(valor2);
+            
+            Object expectedValueFirst = valor2;
+            Object returnValueFirst = node.first();
+            Object expectedValueLast = valor1;
+            Object returnValueLast = node.last();
+
+            assertEquals(expectedValueFirst, returnValueFirst);
+            assertEquals(expectedValueLast, returnValueLast);
+        }
+    }
     
-    @Test
-    @DisplayName("Comprueba que con la lista vacia, al añadir delante el primer nodo ya no es nulo")
-    public void prepend_EmptyList_ReturnFirstNoNull(){
-        Object valor = new Object();
-        node.prepend(valor);
+    @Nested
+    @DisplayName("Test para el metodo append")
+    class appendTest{
+        @Test
+        @DisplayName("Comprueba que con la lista vacia, al añadir por detras el primer nodo, el primero y el ultimo es el ultimo")
+        public void append_EmptyList_FirstEqualsLast(){
+            Object valor = new Object();
+            node.append(valor);
+            
+            Object expectedValue1 = node.first();
+            Object expectedValue2 = node.last();
+
+            assertEquals(valor, expectedValue1);
+            assertEquals(expectedValue1, expectedValue2);
+        }
+
+        @Test
+        @DisplayName("Comprueba que si añadimos por detras dos nodos, el ultimo añadido sera el ultimo y el primero sera el primero")
+        public void prepend_TwoNodes_LastIsFirst(){
+            Object valor1 = new Object();
+            node.append(valor1);
+            Object valor2 = new Object();
+            node.append(valor2);
+            
+            Object expectedValueFirst = valor1;
+            Object returnValueFirst = node.first();
+            Object expectedValueLast = valor2;
+            Object returnValueLast = node.last();
+
+            assertEquals(expectedValueFirst, returnValueFirst);
+            assertEquals(expectedValueLast, returnValueLast);
+        }
+    }
+
+    
+    @Nested 
+    @DisplayName("Test para el metodo deleteFirst")
+    class deleteFirstTest{
+
+         @Test
+         @DisplayName("Comprueba que al borrar el primer elemento de una lista vacia lanza un error")
+         public void deleteFirst_EmptyList_ThrowsError(){
+            assertThrows(DoubleLinkedQueueException.class,()-> node.deleteFirst());
+         }
+
+        @Test 
+        @DisplayName("Comprueba que al borrar el primer elemento de una lista, si es el unico el primero y el ultimo tiene que ser nulo y lanza una excepcion")
+        public void deleteFirst_OneNode_ThrowsError(){
+            Object valor = new Object();
+            node.append(valor);
+            node.deleteFirst();
+
+            assertThrows(DoubleLinkedQueueException.class,()-> node.first());
+            assertThrows(DoubleLinkedQueueException.class,()-> node.last());
+        }
         
-        Object returnValue = node.first();
-        assertNotNull(returnValue);
+
+        @Test 
+        @DisplayName("Comprueba que al borrar el primer elemento de una lista con dos elementos, el primer elemento de la lista pasa a ser el segundo y como solo hay un elemento tambien sera el ultimo")
+        public void deleteFirst_TwoNodes_FirstIsNotNull(){
+            Object valor1 = new Object();
+            node.append(valor1);
+            Object valor2 = new Object();
+            node.append(valor2);
+            node.deleteFirst();
+
+            Object returnedValue = node.first();
+            Object expectedValue = valor2;
+            Object returnedValue2 = node.last();
+
+            assertEquals(returnedValue, expectedValue);
+            assertEquals(returnedValue2, expectedValue);
+        }
     }
 
-    @Test
-    @DisplayName("Comprueba que con la lista vacia, al añadir delante el ultimo nodo ya no es nulo")
-    public void prepend_EmptyList_ReturnLastNoNull(){
-        Object valor = new Object();
-        node.prepend(valor);
-        
-        Object returnValue = node.last();
-        assertNotNull(returnValue);
+    
+    @Nested 
+    @DisplayName("Test para el metodo deleteLast")
+    public class deleteLastTest{
+
+        @Test
+        @DisplayName("Comprueba que al borrar el ultimo elemento de una lista vacia lanza un error")
+        public void deleteLast_EmptyList_ThrowsError(){
+           assertThrows(DoubleLinkedQueueException.class,()-> node.deleteLast());
+        }
+
+        @Test 
+        @DisplayName("Comprueba que al borrar el ultimo elemento de una lista, si es el unico el primero y el ultimo tiene que ser nulo y lanza una excepcion")
+        public void deleteLast_OneNode_ThrowsError(){
+            Object valor = new Object();
+            node.append(valor);
+            node.deleteLast();
+
+            assertThrows(DoubleLinkedQueueException.class,()-> node.first());
+            assertThrows(DoubleLinkedQueueException.class,()-> node.last());
+        }
+
+        @Test 
+        @DisplayName("Comprueba que al borrar el ultimo elemento de una lista con dos elementos, el primer elemento de la lista seguira siendo el primero y como solo hay un elemento tambien sera el ultimo")
+        public void deleteFirst_TwoNodes_FirstIsNotNull(){
+            Object valor1 = new Object();
+            node.append(valor1);
+            Object valor2 = new Object();
+            node.append(valor2);
+
+            node.deleteLast();
+
+            Object returnedValue = node.first();
+            Object expectedValue = valor1;
+            Object returnedValue2 = node.last();
+
+            assertEquals(returnedValue, expectedValue);
+            assertEquals(returnedValue2, expectedValue);
+        }
     }
+    
+    @Nested 
+    @DisplayName("Test para el metodo first")
+    public class firstTest{
+        @Test
+        @DisplayName("Comprueba que first() lanza una excepcion si la lista esta vacia")
+        public void first_EmptyList_ThrowsError(){
+            assertThrows(DoubleLinkedQueueException.class, ()->node.first());
+        }
 
-    @Test
-    @DisplayName("Comprueba que si añadimos por delante dos nodos, el ultimo añadido sera el primero")
-    public void prepend_TwoNodes_LastIsFirst(){
-        Object valor1 = new Object();
-        node.prepend(valor1);
+        @Test
+        @DisplayName("Comprueba que first() devuelve el primer elemento correctamente")
+        public void first_TwoNodes_CheckFirst(){
+            Object valor1 = new Object();
+            Object valor2 = new Object();
 
-        Object valor2 = new Object();
-        node.prepend(valor2);
-        
-        Object expectedValue = valor2;
-        Object returnValue = node.first();
+            node.append(valor1);
+            node.append(valor2);
 
-        assertEquals(expectedValue, returnValue);
+            Object expectedValue = valor1;
+            Object returnValue = node.first();
+
+            assertEquals(expectedValue, returnValue);
+        }
     }
+    
 
-    @Test 
-    @DisplayName("Comprueba que al añadir al final a la lista vacia, el primero y el ultimo son iguales")
-    public void append_EmptyList_FirstAndLastEquals(){
-        Object valor = new Object();
-        node.append(valor);
+    @Nested
+    @DisplayName("Test para el metodo last")
+    public class lastTest{
+        @Test
+        @DisplayName("Comprueba que last() lanza una excepcion si la lista esta vacia")
+        public void last_EmptyList_ThrowsError(){
+            assertThrows(DoubleLinkedQueueException.class,()-> node.last());
+        }
 
-        assertEquals(node.first(), node.last());
+        @Test
+        @DisplayName("Comprueba que last() devuelve el ultimo elemento correctamente")
+        public void last_TwoNodes_CheckLast(){
+            Object valor1 = new Object();
+            Object valor2 = new Object();
+
+            node.append(valor1);
+            node.append(valor2);
+
+            Object expectedValue = valor2;
+            Object returnValue = node.last();
+
+            assertEquals(expectedValue, returnValue);
+        }
     }
+    
+    @Nested
+    @DisplayName("Test para el metodo size")
+    public class sizeTest{
 
-    @Test 
-    @DisplayName("Comprueba que al añadir dos elementos con append, el ultimo añadido sera el ultimo en la lista")
-    public void append_TwoNodes_Last(){
-        Object valor1 = new Object();
-        Object valor2 = new Object();
+        @Test 
+        @DisplayName("Comprueba que size() devuelve cero si la lista esta vacia")
+        public void size_EmptyList_ReturnZero(){
+            int expectedValue = 0;
+            int returnValue = node.size();
 
-        node.append(valor1);
-        node.append(valor2);
+            assertEquals(expectedValue, returnValue);
+        }
 
-        Object expectedValue = valor2;
-        Object returnValue = node.last();
+        @Test 
+        @DisplayName("Comprueba que size() devuelve uno si la lista tiene un elemento")
+        public void size_OneNode_ReturnOne(){
+            Object valor = new Object();
+            node.append(valor);
 
-        assertEquals(expectedValue, returnValue);
-    }
+            int expectedValue = 1;
+            int returnedValue = node.size();
 
-    @Test 
-    @DisplayName("Comprueba que al borrar el primer elemento de una lista, si es el unico el ultimo tiene que ser nulo")
-    public void deleteFirst_OneNode_LastIsNull(){
-        Object valor = new Object();
-        node.append(valor);
-
-        node.deleteFirst();
-
-        Object returnValue = node.last();
-        assertNull(returnValue);
-    }
-
-    @Test 
-    @DisplayName("Comprueba que al borrar el primer elemento de una lista con dos elementos, el primero no puede ser nulo")
-    public void deleteFirst_TwoNodes_FirstIsNotNull(){
-        Object valor1 = new Object();
-        node.append(valor1);
-        Object valor2 = new Object();
-        node.append(valor2);
-
-        node.deleteFirst();
-
-        Object returnValue = node.first();
-        assertNotNull(returnValue);
-    }
-
-    @Test 
-    @DisplayName("Comprueba que al borrar el ultimo elemento de una lista, si es el unico el primero tiene que ser nulo")
-    public void deleteLast_OneNode_FirstIsNull(){
-        Object valor = new Object();
-        node.append(valor);
-
-        node.deleteLast();
-
-        Object returnValue = node.first();
-        assertNull(returnValue);
-    }
-
-    @Test 
-    @DisplayName("Comprueba que al borrar el ultimo elemento de una lista con dos elementos, el ultimo no puede ser nulo")
-    public void deleteLast_TwoNodes_LastIsNotNull(){
-        Object valor1 = new Object();
-        node.append(valor1);
-        Object valor2 = new Object();
-        node.append(valor2);
-
-        node.deleteLast();
-
-        Object returnValue = node.last();
-        assertNotNull(returnValue);
-    }
-
-    @Test
-    @DisplayName("Comprueba que first() devuelve nulo si la lista esta vacia")
-    public void first_EmptyList_CheckNull(){
-        Object expectedValue = null;
-        Object returnValue = node.first();
-
-        assertEquals(expectedValue, returnValue);
-    }
-
-    @Test
-    @DisplayName("Comprueba que first() devuelve el primer elemento correctamente")
-    public void first_TwoNodes_CheckFirst(){
-        Object valor1 = new Object();
-        Object valor2 = new Object();
-
-        node.append(valor1);
-        node.append(valor2);
-
-        Object expectedValue = valor1;
-        Object returnValue = node.first();
-
-        assertEquals(expectedValue, returnValue);
-    }
-
-    @Test
-    @DisplayName("Comprueba que last() devuelve nulo si la lista esta vacia")
-    public void last_EmptyList_CheckNull(){
-        Object expectedValue = null;
-        Object returnValue = node.last();
-
-        assertEquals(expectedValue, returnValue);
-    }
-
-    @Test
-    @DisplayName("Comprueba que last() devuelve el ultimo elemento correctamente")
-    public void last_TwoNodes_CheckLast(){
-        Object valor1 = new Object();
-        Object valor2 = new Object();
-
-        node.append(valor1);
-        node.append(valor2);
-
-        Object expectedValue = valor2;
-        Object returnValue = node.last();
-
-        assertEquals(expectedValue, returnValue);
-    }
-
-    @Test 
-    @DisplayName("Comprueba que size() devuelve correctamente el tamaño actual de la lista")
-    public void size_EmptyList_ReturnZero(){
-        int expectedValue = 0;
-        int returnValue = node.size();
-
-        assertEquals(expectedValue, returnValue);
+            assertEquals(returnedValue, expectedValue);
+        }
     }
 
 }
