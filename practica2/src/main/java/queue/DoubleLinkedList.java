@@ -1,5 +1,7 @@
 package queue;
 
+import java.util.Comparator;
+
 public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
     private LinkedNode<T> first;
     private LinkedNode<T> last;
@@ -49,6 +51,8 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
                 last = null;
             }
             size--;
+        } else {
+            throw new DoubleLinkedQueueException("Cannot delete from an empty deque.");
         }
     }
 
@@ -62,6 +66,8 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
                 first = null;
             }
             size--;
+        } else {
+            throw new DoubleLinkedQueueException("Cannot delete from an empty deque.");
         }
     }
 
@@ -69,20 +75,85 @@ public class DoubleLinkedList<T> implements DoubleLinkedQueue<T> {
     public T first() {
         if (first != null) {
             return first.getItem();
+        } else {
+            throw new DoubleLinkedQueueException("Deque is empty, cannot retrieve first element.");
         }
-        return null;
     }
 
     @Override
     public T last() {
         if (last != null) {
             return last.getItem();
+        } else {
+            throw new DoubleLinkedQueueException("Deque is empty, cannot retrieve last element.");
         }
-        return null;
     }
 
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index out of range");
+        }
+        LinkedNode<T> current = first;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        return current.getItem();
+    }
+
+    @Override
+    public boolean contains(T value) {
+        LinkedNode<T> current = first;
+        while (current != null) {
+            if (current.getItem().equals(value)) {
+                return true;
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
+
+    @Override
+    public void remove(T value) {
+        LinkedNode<T> current = first;
+        while (current != null) {
+            if (current.getItem().equals(value)) {
+                LinkedNode<T> prev = current.getPrevious();
+                LinkedNode<T> next = current.getNext();
+                if (prev != null) {
+                    prev.setNext(next);
+                } else {
+                    first = next;
+                }
+                if (next != null) {
+                    next.setPrevious(prev);
+                } else {
+                    last = prev;
+                }
+                size--;
+                return; // Assuming only one occurrence needs to be removed
+            }
+            current = current.getNext();
+        }
+    }
+
+    @Override
+    public void sort(Comparator<? super T> comparator) {
+        // Using Bubble Sort algorithm for in-place sorting
+        for (LinkedNode<T> i = first; i != null; i = i.getNext()) {
+            for (LinkedNode<T> j = first; j.getNext() != null; j = j.getNext()) {
+                if (comparator.compare(j.getItem(), j.getNext().getItem()) > 0) {
+                    // Swap j and j.next
+                    T temp = j.getItem();
+                    j.setItem(j.getNext().getItem());
+                    j.getNext().setItem(temp);
+                }
+            }
+        }
     }
 }
