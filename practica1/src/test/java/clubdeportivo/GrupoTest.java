@@ -1,3 +1,5 @@
+// Realizado por Javier Torrecilla Reyes y Sandra Vázquez Pérez
+
 package clubdeportivo;
 
 import org.junit.jupiter.api.*;
