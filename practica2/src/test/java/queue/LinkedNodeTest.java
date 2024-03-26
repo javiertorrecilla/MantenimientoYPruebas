@@ -6,8 +6,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedNodeTest {
 
-    private Object item = new Object();
-    private LinkedNode<Object> node = new LinkedNode<>(item, null, null);
+    private Object item;
+    private LinkedNode<Object> node;
+    private LinkedNode<Object> previous;
+    private LinkedNode<Object> next;
+
+    @BeforeEach
+    public void init(){
+        item = new Object();
+        previous = null;
+        next = null;
+        node = new LinkedNode<Object>(item, previous, next);
+    }
 
     @Nested
     @DisplayName("Tests para metodos Item")
@@ -17,7 +27,6 @@ public class LinkedNodeTest {
         @DisplayName("Se comprueba que el metodo getItem te devuelve el item correctamente")
         public void getItem_Check(){
             Object expectedValue = item;
-
             Object returnValue = node.getItem();
 
             assertEquals(expectedValue, returnValue);
@@ -38,7 +47,7 @@ public class LinkedNodeTest {
     }
 
     @Nested
-    @DisplayName("Tests para metedos Previous")
+    @DisplayName("Tests para metodos Previous")
     class previous{
         
         @Test
@@ -46,7 +55,6 @@ public class LinkedNodeTest {
         public void getPrevious_UnUnicoNodo_CheckNull(){
             //inicialmente solo hay un nodo, el anterior es nulo
             Object expectedValue = null;
-
             Object returnValue = node.getPrevious();
 
             assertEquals(expectedValue, returnValue);
@@ -72,10 +80,9 @@ public class LinkedNodeTest {
     class next{
 
         @Test
-        @DisplayName("Se comprueba que el metodo getNext como no tiene siguiente devovlera nulo")
+        @DisplayName("Se comprueba que el metodo getNext como no tiene siguiente devolvera nulo")
         public void getNext_NoHaySiguiente_CheckNull(){
             Object expectedValue = null;
-
             Object returnValue = node.getNext();
 
             assertEquals(expectedValue, returnValue);
@@ -97,8 +104,8 @@ public class LinkedNodeTest {
     }
 
     @Nested 
-    @DisplayName("Test para metodos de nodos iniciales")
-    class firstNode{
+    @DisplayName("Test para el metodo isFirstNode")
+    class isFirstNodeTest{
         
         @Test
         @DisplayName("Comprueba que como solo hay un nodo es el inicial")
@@ -109,13 +116,13 @@ public class LinkedNodeTest {
         }
 
         @Test
-        @DisplayName("Comprueba que el ultimo nodo linkeado no es inicial")
+        @DisplayName("Comprueba que si añado un nodo al final no es inicial")
         public void isFirstNode_MoreThanOneNode_returnsFalse(){
-            LinkedNode<Object> post = new LinkedNode(item, null, null);
-            post.setPrevious(node);
-            node.setNext(post);
+            Object post = new Object();
+            LinkedNode<Object> next = new LinkedNode(post, node, null);
+            node.setNext(next);
 
-            boolean returnValue = post.isFirstNode();
+            boolean returnValue = next.isFirstNode();
 
             assertFalse(returnValue);
         }
@@ -124,8 +131,8 @@ public class LinkedNodeTest {
 
 
     @Nested 
-    @DisplayName("Test para metodos del primer nodo")
-    class firstNode{
+    @DisplayName("Test para el metodo isLastNode")
+    class isLastNodeTest{
         
         @Test
         @DisplayName("Comprueba que como solo hay un nodo, es el final")
@@ -138,8 +145,8 @@ public class LinkedNodeTest {
         @Test
         @DisplayName("Comprueba que el primer nodo linkeado no es final")
         public void isFirstNode_MoreThanOneNode_returnsFalse(){
-            LinkedNode<Object> pre = new LinkedNode(item, null, null);
-            pre.setNext(node);
+            Object nuevo = new Object();
+            LinkedNode<Object> pre = new LinkedNode(nuevo, null, node);
             node.setPrevious(pre);
 
             boolean returnValue = pre.isLastNode();
@@ -150,31 +157,21 @@ public class LinkedNodeTest {
 
     @Nested
     @DisplayName("Test para metodos de nodos intermedios")
-    class notATerminalNode{
+    class isNotATerminalNodeTest{
         
         @Test
-        @DisplayName("Comprueba que el nodo inicial de una serie de nodos linkeados, no es no terminal")
+        @DisplayName("Comprueba que el nodo inicial es terminal")
         public void isNotATerminalNode_FirstNode_returnsFalse(){
-            LinkedNode<Object> previous = new LinkedNode<Object>(item, null, null);
-            previous.setNext(node);
-            LinkedNode<Object> next = new LinkedNode<Object>(item, null, null);
-            next.setPrevious(node);
-            node.setPrevious(previous);
-            node.setNext(next);
-
-            boolean returnValue = pre.isNotATerminalNode();
+            boolean returnValue = node.isNotATerminalNode();
 
             assertFalse(returnValue);
         }
 
         @Test
-        @DisplayName("Comprueba que el nodo final de una serie de nodos linkeados, no es no terminal")
+        @DisplayName("Comprueba que el nodo final es terminal")
         public void isNotATerminalNode_LastNode_returnsFalse(){
-            LinkedNode<Object> previous = new LinkedNode<Object>(item, null, null);
-            previous.setNext(node);
-            LinkedNode<Object> next = new LinkedNode<Object>(item, null, null);
-            next.setPrevious(node);
-            node.setPrevious(previous);
+            Object post = new Object();
+            LinkedNode<Object> next = new LinkedNode<Object>(post, node, null);
             node.setNext(next);
 
             boolean returnValue = next.isNotATerminalNode();
@@ -185,11 +182,11 @@ public class LinkedNodeTest {
         @Test
         @DisplayName("Comprueba que el nodo intermedio de una serie de nodos linkeados, es no terminal")
         public void isNotATerminalNode_returnsTrue(){
-            LinkedNode<Object> previous = new LinkedNode<Object>(item, null, null);
-            previous.setNext(node);
-            LinkedNode<Object> next = new LinkedNode<Object>(item, null, null);
-            next.setPrevious(node);
+            Object ob1 = new Object();
+            LinkedNode<Object> previous = new LinkedNode<Object>(ob1, null, node);
             node.setPrevious(previous);
+            Object ob2 = new Object();
+            LinkedNode<Object> next = new LinkedNode<Object>(ob2, node, null);
             node.setNext(next);
 
             boolean returnValue = node.isNotATerminalNode();
