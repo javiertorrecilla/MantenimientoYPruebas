@@ -325,7 +325,7 @@ public class DoubleLinkedListTest<T> {
         }
 
         @Test 
-        @DisplayName("Comprueba que contains devuelve true con un mas de un elemento en lista")
+        @DisplayName("Comprueba que ordena de forma adecuada una lista desordenada")
         public void sort_UnsortereddList_Check(){
             DoubleLinkedList expectedValue = new DoubleLinkedList<>();
             DoubleLinkedList returnValue = node;
