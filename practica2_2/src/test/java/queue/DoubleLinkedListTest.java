@@ -1,8 +1,11 @@
+//Realizado por Javier Torrecilla Reyes y Sandra Vázquez Pérez
+
 package queue;
 
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Comparator;
 
 public class DoubleLinkedListTest<T> {
 
@@ -240,6 +243,103 @@ public class DoubleLinkedListTest<T> {
             int returnedValue = node.size();
 
             assertEquals(returnedValue, expectedValue);
+        }
+    }
+
+    @Nested
+    @DisplayName("Test para el metodo contains")
+    public class containsTest{
+
+        @Test 
+        @DisplayName("Comprueba que contains() devuelve falso si la lista es vacia")
+        public void contains_EmptyList_ReturnFalse(){
+            Object valor = new Object();
+
+            assertTrue(node.contains(valor));
+        }
+
+        @Test 
+        @DisplayName("Comprueba que contains devuelve true con un unico elemento en lista")
+        public void contains_OneNode_ReturnTrue(){
+            Object valor = new Object();
+            node.append(valor);
+
+            assertTrue(node.contains(valor));
+        }
+
+        @Test 
+        @DisplayName("Comprueba que contains devuelve true con un mas de un elemento en lista")
+        public void contains_MoreThanOneNode_ReturnTrue(){
+            Object valor1 = new Object();
+            Object valor2 = new Object();
+            Object valor3 = new Object();
+            node.append(valor1);
+            node.append(valor2);
+            node.append(valor3);
+
+            assertTrue(node.contains(valor3));
+        }
+    }
+
+    @Nested
+    @DisplayName("Test para el metodo sort")
+    public class sortTest{
+
+        @Test 
+        @DisplayName("Comprueba que ordena de forma adecuada una lista vacia")
+        public void sort_EmptyList_Check(){
+            DoubleLinkedList expectedValue = new DoubleLinkedList<>();
+            DoubleLinkedList returnValue = node;
+
+            assertEquals(expectedValue, returnValue.sort(Comparator.naturalOrder()));
+        }
+
+        @Test 
+        @DisplayName("Comprueba que ordena de forma adecuada una lista de un solo elemento")
+        public void sort_OneNode_Check(){
+            DoubleLinkedList expectedValue = new DoubleLinkedList<>();
+            DoubleLinkedList returnValue = node;
+
+            expectedValue.append(5);
+            returnValue.prepend(5);
+
+            assertEquals(expectedValue, returnValue.sort(Comparator.naturalOrder()));
+        }
+
+        @Test 
+        @DisplayName("Comprueba que ordena de forma adecuada una lista ya ordenada")
+        public void sort_List_Check(){
+            DoubleLinkedList expectedValue = new DoubleLinkedList<>();
+            DoubleLinkedList returnValue = node;
+
+            expectedValue.append(1);
+            expectedValue.append(2);
+            expectedValue.append(3);
+            expectedValue.append(4);
+            returnValue.append(1);
+            returnValue.append(2);
+            returnValue.append(3);
+            returnValue.append(4);
+        
+            assertEquals(expectedValue, returnValue.sort(Comparator.naturalOrder()));
+        }
+
+        @Test 
+        @DisplayName("Comprueba que contains devuelve true con un mas de un elemento en lista")
+        public void sort_UnsortereddList_Check(){
+            DoubleLinkedList expectedValue = new DoubleLinkedList<>();
+            DoubleLinkedList returnValue = node;
+
+            expectedValue.append(1);
+            expectedValue.append(2);
+            expectedValue.append(3);
+            expectedValue.append(4);
+            returnValue.append(3);
+            returnValue.append(1);
+            returnValue.append(4);
+            returnValue.append(2);
+        
+            assertEquals(expectedValue, returnValue.sort(Comparator.naturalOrder()));
         }
     }
 
