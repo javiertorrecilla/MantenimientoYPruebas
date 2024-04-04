@@ -24,7 +24,7 @@ public class ronQI2Silvertest {
     RonQI2Silver ronqui2Silver;
 
 
-    @Mock 
+    @Mock (lenient = true)
     DispositivoSilver dispositivoPrueba;
 
     @BeforeEach
@@ -39,35 +39,28 @@ public class ronQI2Silvertest {
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_AllOk_AssertTrue1(){
+        public void inicializar_AllOk_AssertTrue(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+
+            assertTrue(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera incorrecta porque no se conecta el Sensor a la Presion")
-        public void inicializar_NoConectadoPresion_AssertFalse(){
+        public void inicializar_NoConfiguradoSonido_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
 
-            assertFalse(ronqui2Silver.inicializar());
-        }
-
-        @Test
-        @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_NoConfiguradoPresion_AssdertFalse(){
-            when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
-            when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
-            when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
-            when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
-
-            assertFalse(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
@@ -76,143 +69,183 @@ public class ronQI2Silvertest {
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
-            when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
+            when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
 
-            assertFalse(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_AllOk_AsssertTrue(){
+        public void inicializar_NoConfigurados_AssertFalse(){
+            when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
+            when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
+            when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
+            when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
+
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
+        }
+
+        @Test
+        @DisplayName("Comprueba que se inicializa de manera correcta")
+        public void inicializar_NoConectadoSonido_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
 
-            assertFalse(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_AllsOk_AssertTrue(){
+        public void inicializar_NoSonido_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
 
-            assertFalse(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_AllOk_AgssertTrue(){
+        public void inicializar_NoConectSonidoNoConfigPresion_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializadr_AllOk_AssertTrue(){
+        public void inicializar_SoloConectadoPresion_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void iniciablizar_AllOk_AssertTrue(){
+        public void inicializar_NoConectadoPresion_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_AllObk_AssertTrue(){
+        public void inicializar_NoConectPresionNoConfigSonido_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_bAllOk_AssertTrue(){
+        public void inicializar_NoPresion_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inibcializar_AllOk_AssertTrue(){
+        public void inicializar_SoloConectadoSonido_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_AllOk_bAssertTrue(){
+        public void inicializar_SoloConfiguradosNoConectados_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicialibzar_AllOk_AssertTrue(){
+        public void inicializar_SoloConfigPresion_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(true);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicialdizar_AllOk_AssertTrue(){
+        public void inicializar_SoloConfigSonido_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(true);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
 
         @Test
         @DisplayName("Comprueba que se inicializa de manera correcta")
-        public void inicializar_AllOk_AssertTrue(){
+        public void inicializar_AllFalse_AssertFalse(){
             when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorPresion()).thenReturn(false);
             when(dispositivoPrueba.configurarSensorSonido()).thenReturn(false);
 
-            assertTrue(ronqui2Silver.inicializar());
+            boolean result = ronqui2Silver.inicializar();
+            
+            assertFalse(result);
         }
     }
+    
 
     
     /*
