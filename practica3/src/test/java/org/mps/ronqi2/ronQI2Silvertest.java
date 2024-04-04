@@ -261,16 +261,93 @@ public class ronQI2Silvertest {
      * Genera las pruebas que estimes oportunas para comprobar su correcto funcionamiento. 
      * Centrate en probar si todo va bien, o si no, y si se llama a los métodos que deben ser llamados.
      */
+
+    @Nested
+    @DisplayName("Clase que comprueba todas las posibles opciones del metodo reconectar")
+    class reconectarTest{
+
+        @Test
+        @DisplayName("Comprueba que si un dispositivo esta conectado, no se intenta reconectar")
+        public void reconectar_DispositivoConectado_AssertFalse(){
+            when(dispositivoPrueba.estaConectado()).thenReturn(true);
+
+            boolean result = ronqui2Silver.reconectar();
+
+            assertFalse(result);
+            verify(dispositivoPrueba, times(0)).conectarSensorPresion();
+            verify(dispositivoPrueba, times(0)).conectarSensorSonido();
+        }
+
+        @Test
+        @DisplayName("Comprueba que un dispositivo no conectado, no reconecta porque no conecta con el sensor de presion")
+        public void reconectar_DispositivoReconectadoNoConectarPresion_AssertFalse(){
+            when(dispositivoPrueba.estaConectado()).thenReturn(false);
+            when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
+            when(dispositivoPrueba.conectarSensorPresion()).thenReturn(false);
+
+            boolean result = ronqui2Silver.reconectar();
+
+            assertFalse(result);
+        }
+
+        @Test
+        @DisplayName("Comprueba que un dispositivo no conectado, no reconecta porque no conecta con el sensor de sonido")
+        public void reconectar_DispositivoReconectadoNoConectarSonido_AssertFalse(){
+            when(dispositivoPrueba.estaConectado()).thenReturn(false);
+            when(dispositivoPrueba.conectarSensorSonido()).thenReturn(false);
+            when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
+
+            boolean result = ronqui2Silver.reconectar();
+
+            assertFalse(result);
+        }
+
+        @Test
+        @DisplayName("Comprueba que un dispositivo no conectado, reconecta adecuadamente")
+        public void reconectar_DispositivoReconectado_AssertTrue(){
+            when(dispositivoPrueba.estaConectado()).thenReturn(false);
+            when(dispositivoPrueba.conectarSensorSonido()).thenReturn(true);
+            when(dispositivoPrueba.conectarSensorPresion()).thenReturn(true);
+
+            boolean result = ronqui2Silver.reconectar();
+
+            assertTrue(result);
+        }
+    }
     
     /*
      * El método evaluarApneaSuenyo, evalua las últimas 5 lecturas realizadas con obtenerNuevaLectura(), 
      * y si ambos sensores superan o son iguales a sus umbrales, que son thresholdP = 20.0f y thresholdS = 30.0f;, 
      * se considera que hay una apnea en proceso. Si hay menos de 5 lecturas también debería realizar la media.
-     * /
+     */
+    
+    @Nested
+    @DisplayName("Clase que comprueba todas las opciones de la evaluación de amnea de sueño")
+    public class evaluarApneaSuenyoTest{
+
+        @Test
+        @DisplayName("Comprueba que un al evaluar las tomas, no hay apnea de sueño")
+        public void evaluarApneaSuenyo_TomasAltas_AssertFalse(){
+            when(dispositivoPrueba.leerSensorPresion()).thenReturn(50.0f);
+            when(dispositivoPrueba.leerSensorSonido()).thenReturn(50.0f);
+    
+            //Hacemos un for para obtener 3 tomas de nueva lectura
+            for(int i =0; i<3; i++){
+                ronqui2Silver.obtenerNuevaLectura();
+            }
+            boolean result = ronqui2Silver.evaluarApneaSuenyo();
+
+            assertFalse(result);
+            //Como hemos hecho 3 tomas, debemos comprobar que se leen 3 tomas de presion y 3 de sonido
+            verify(dispositivoPrueba, times(3)).leerSensorPresion();
+            verify(dispositivoPrueba, times(3)).leerSensorSonido();
+        }
+
+    }
      
+
      /* Realiza un primer test para ver que funciona bien independientemente del número de lecturas.
      * Usa el ParameterizedTest para realizar un número de lecturas previas a calcular si hay apnea o no (por ejemplo 4, 5 y 10 lecturas).
      * https://junit.org/junit5/docs/current/user-guide/index.html#writing-tests-parameterized-tests
      */
 }
-
