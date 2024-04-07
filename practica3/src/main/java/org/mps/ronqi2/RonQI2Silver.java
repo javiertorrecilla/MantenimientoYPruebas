@@ -6,6 +6,7 @@ import java.util.List;
 public class RonQI2Silver extends RonQI2{
     
     private int numLecturas;
+    //p: presion, s: sonido
     private List<Float> lecturasP;
     private List<Float> lecturasS;
     private float thresholdP;
@@ -27,7 +28,8 @@ public class RonQI2Silver extends RonQI2{
         if(lecturasP.size()>numLecturas){
             lecturasP.remove(0); 
         }
-        lecturasS.add(disp.leerSensorPresion());
+        //modificacion porque añade leerSensorSonido
+        lecturasS.add(disp.leerSensorSonido());
         if(lecturasS.size()>numLecturas){
             lecturasS.remove(0); 
         }
@@ -51,11 +53,12 @@ public class RonQI2Silver extends RonQI2{
                 .average()
                 .orElse(0.0);
         
-        if (avgP>=thresholdP && avgS > thresholdS){
-            resultado = false;
+        //modificacion, si la media es mayor es true, no false
+        if (avgP>thresholdP && avgS > thresholdS){
+            resultado = true;
         }   
         else{
-            resultado = true;
+            resultado = false;
         }
         return resultado;
     }
