@@ -1,3 +1,5 @@
+//practica realizada por Javier Torrecilla Reyes y Sandra Vázquez Pérez
+
 package org.mps.ronqi2;
 
 import org.junit.jupiter.api.*;
@@ -18,10 +20,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mps.dispositivo.Dispositivo;
 import org.mps.dispositivo.DispositivoSilver;
 
 @ExtendWith(MockitoExtension.class)
-public class ronQI2Silvertest {
+public class ronQI2SilverTest {
 
     RonQI2Silver ronqui2Silver;
     
@@ -263,6 +266,17 @@ public class ronQI2Silvertest {
 
     }
 
+    @Test
+    @DisplayName("Comprueba que si añadimos un dispositivo, se actualiza la referencia en la clase RonQI2")
+    public void anyadirDispositivo_checkEquals(){
+        DispositivoSilver dispositivoNuevo = mock(DispositivoSilver.class);
+        ronqui2Silver.anyadirDispositivo(dispositivoNuevo);
+
+        DispositivoSilver expectedValue = dispositivoNuevo;
+        Dispositivo returnedValue = ronqui2Silver.disp;
+
+        assertEquals(expectedValue, returnedValue);
+    }
 
     /*
      * Un reconectar, comprueba si el dispositivo desconectado, en ese caso, conecta ambos y devuelve true si ambos han sido conectados. 
@@ -498,5 +512,30 @@ public class ronQI2Silvertest {
         }
 
 
+     }
+
+     @Nested
+     @DisplayName("Tests para el metodo estaConectado()")
+     public class estaConectadoTest{
+
+        @Test
+        @DisplayName("Comprueba que si el dispositivo esta conectado, el objeto Ronqi2 estara conectado")
+        public void estaConectado_dispConectado_assertTrue(){
+            when(dispositivoPrueba.estaConectado()).thenReturn(true);
+
+            boolean result = ronqui2Silver.estaConectado();
+
+            assertTrue(result);
+        }
+
+        @Test 
+        @DisplayName("Comprueba que si el dispositivo no esta conectado, el objeto Ronqi2 tampoco")
+        public void estaConectado_dispNoConectado_assertFalse(){
+            when(dispositivoPrueba.estaConectado()).thenReturn(false);
+
+            boolean result = ronqui2Silver.estaConectado();
+
+            assertFalse(result);
+        }        
      }
 }
