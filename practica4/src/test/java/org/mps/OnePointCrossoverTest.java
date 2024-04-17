@@ -40,7 +40,7 @@ public class OnePointCrossoverTest{
     @DisplayName("Comprobar que cuando se pasa un padre nulo, la funcion crossover lanza error")
     public void crossover_Parent1Length0_ThrowsException() throws EvolutionaryAlgorithmException{
         int[] parent2 = {1, 2, 3};
-        int[] parent1 = {1};
+        int[] parent1 = {};
 
         assertThrows(EvolutionaryAlgorithmException.class, ()->onePointCrossover.crossover(parent1,parent2));
     }
