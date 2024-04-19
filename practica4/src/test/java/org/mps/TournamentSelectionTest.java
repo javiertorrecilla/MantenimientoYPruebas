@@ -25,7 +25,7 @@ public class TournamentSelectionTest {
     }
 
     @Test
-    @DisplayName("Comprueba que si la poblacion es nula, salta error en el método select")
+    @DisplayName("Comprueba que si la poblacion es nula, salta una excepcion")
     public void select_PopulationNull_ThrowsError() throws EvolutionaryAlgorithmException{
         int[] population = null;
 
@@ -33,7 +33,7 @@ public class TournamentSelectionTest {
     }
 
     @Test
-    @DisplayName("Comprueba que si la poblacion es 0, salta error en el método select")
+    @DisplayName("Comprueba que si la poblacion es 0, salta una excepcion")
     public void select_PopulationZero_ThrowsError() throws EvolutionaryAlgorithmException{
         int[] population = {};
 
@@ -51,7 +51,7 @@ public class TournamentSelectionTest {
     }
 
     @Test
-    @DisplayName("Comprueba que cuando el tamaño del resultado es igual al de la población")
+    @DisplayName("Comprueba que el tamaño del resultado es igual al de la población")
     public void select_PopulationSize_Check() throws EvolutionaryAlgorithmException{
         int[] population = {1,2};
         
