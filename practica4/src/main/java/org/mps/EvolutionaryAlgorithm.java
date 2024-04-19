@@ -29,7 +29,6 @@ import org.mps.selection.SelectionOperator;
  * diferentes operadores de selección, cruce y mutación.
  */
 
- //AQUI HAY PROBLEMAS
 public class EvolutionaryAlgorithm {
     private SelectionOperator selectionOperator;
     private MutationOperator mutationOperator;
