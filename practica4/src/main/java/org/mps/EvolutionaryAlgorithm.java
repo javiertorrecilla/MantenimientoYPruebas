@@ -56,7 +56,8 @@ public class EvolutionaryAlgorithm {
 
     public int[][] optimize(int[][] population) throws EvolutionaryAlgorithmException {
 
-        if (population != null && population.length > 0 && population[0]!=null && population[0].length>0) {
+        //modificacion: la poblacion debe de ser par
+        if (population != null && population.length > 0 && population[0]!=null && population[0].length>0 && population.length%2==0) {
             // Creamos una nueva población para los descendientes
             int[][] offspringPopulation = new int[population.length][population.length];
 
@@ -95,10 +96,15 @@ public class EvolutionaryAlgorithm {
      * como el que tiene menor suma de sus elementos
      */
     private boolean better(int[] population1, int[] population2) {
+        //modificacion para que cuente la suma de sus elementos correctamente cada poblacion
         int suma1 = 0;
         int suma2 = 0;
+        
         for (int i = 0; i < population1.length; i++) {
             suma1 += population1[i];
+        }
+
+        for(int i=0;i<population2.length;i++){
             suma2 += population2[i];
         }
         return suma1 < suma2;
