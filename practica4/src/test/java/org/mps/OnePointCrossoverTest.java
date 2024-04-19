@@ -37,7 +37,7 @@ public class OnePointCrossoverTest{
     }
 
     @Test
-    @DisplayName("Comprobar que cuando se pasa un padre nulo, la funcion crossover lanza error")
+    @DisplayName("Comprobar que cuando se pasa el padre 1 con longitud cero, la funcion crossover lanza error")
     public void crossover_Parent1Length0_ThrowsException() throws EvolutionaryAlgorithmException{
         int[] parent2 = {1, 2, 3};
         int[] parent1 = {};
@@ -66,7 +66,7 @@ public class OnePointCrossoverTest{
     }
 
     @Test
-    @DisplayName("Comprobar que cuando cuando las longitudes de los parents son iguales, se crea un offspring con las filas de igual length que los parents")
+    @DisplayName("Comprobar que cuando las longitudes de los parents son iguales, se crea un offspring con las filas de igual length que los parents")
     public void crossover_ParentsEqualsLength_OffspringLengthEqualsParentsLength() throws EvolutionaryAlgorithmException{
         int[] parent1 = {1, 2, 3};
         int[] parent2 = {4, 5, 6};
@@ -84,15 +84,12 @@ public class OnePointCrossoverTest{
         int [] parent2 = {1, 9, 5, 3};
         int [] [] offspring = onePointCrossover.crossover(parent1, parent2);
         
-        String expectedValue = Arrays.toString(parent1);
-        String returnValue = Arrays.toString(offspring[0]);
+        String expectedValue1 = Arrays.toString(parent1);
+        String returnValue1 = Arrays.toString(offspring[0]);
+        String expectedValue2 = Arrays.toString(parent2);
+        String returnValue2 = Arrays.toString(offspring[1]);
 
-        assertNotEquals(expectedValue, returnValue);
-        
-        expectedValue = Arrays.toString(parent2);
-        returnValue = Arrays.toString(offspring[1]);
-
-        assertNotEquals(expectedValue, returnValue);
+        assertNotEquals(expectedValue1, returnValue1);
+        assertNotEquals(expectedValue2, returnValue2);
     }
 }
-
