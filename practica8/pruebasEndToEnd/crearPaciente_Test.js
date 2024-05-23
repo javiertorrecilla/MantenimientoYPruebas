@@ -25,7 +25,7 @@ export default async function () {
         page.locator('input[name="nombre"]').type('Javier');
         page.locator('input[name="DNI"]').type('11111111X');
     
-        const submitButton = page.locator('input[name="login"]');
+        const submitButton = page.locator('button[name="login"]');
     
         await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), submitButton.click()]);
     
@@ -37,15 +37,11 @@ export default async function () {
         let createButton = page.locator('button[name="add"]');
         await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), createButton.click()]);
 
-        page.locator('input[name="DNI"]').clear();
-        page.locator('input[name="Nombre"]').clear();
-        page.locator('input[name="Edad"]').clear();
-        page.locator('input[name="Cita"]').clear();
         let id = Math.round(Math.random()*15);
-        page.locator('input[name="DNI"]').type(id);
-        page.locator('input[name="Nombre"]').type("Marta");
-        page.locator('input[name="Edad"]').type(28);
-        page.locator('input[name="Cita"]').type("Revisión");
+        page.locator('input[name="dni"]').type(id);
+        page.locator('input[name="nombre"]').type("Marta");
+        page.locator('input[name="edad"]').type(28);
+        page.locator('input[name="cita"]').type("Revisión");
 
         page.waitForSelector('button[type="submit"]');
         const submitButtonPage = page.locator('button[type="submit"]');

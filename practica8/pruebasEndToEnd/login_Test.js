@@ -25,9 +25,9 @@ export default async function () {
     page.locator('input[name="nombre"]').type('Javier');
     page.locator('input[name="DNI"]').type('11111111X');
 
-    const submitButton = page.locator('input[name="login"]');
+    const submitButton = page.locator('button[name="login"]');
 
-    await Promise.all([page.waitForNavigation(), submitButton.click()]);
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), submitButton.click()]);
 
     check(page, {
     'header': p => p.locator('h2').textContent() == 'Listado de pacientes',
